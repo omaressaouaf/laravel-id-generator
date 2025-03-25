@@ -81,6 +81,7 @@ class IdGeneratorFactory
         // stripped max id from maxId starting from prefix length and extracting according to adaptive length
         $strippedMaxId = Str::substr($maxId, $prefixLength, $adaptiveLength);
 
+        // If no id was found, use initial starting point (e.g. start from 01001 instead of 00001)
         if (empty($strippedMaxId)) {
             $strippedMaxId = $initialStartingPoint;
         }
