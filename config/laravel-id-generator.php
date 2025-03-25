@@ -5,6 +5,7 @@ return [
         'field' => 'custom_id',
         'padding' => 5,
         'prefix' => 'TEST-',
-        'suffix' => ''
+        'suffix' => '',
+        'initial-starting-point' => 0
     ],
 ];
