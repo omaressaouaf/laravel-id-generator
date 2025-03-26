@@ -27,6 +27,7 @@ class IdGeneratorFactory
             Arr::get($config, 'padding') ?? 5,
             Arr::get($config, 'prefix') ?? '',
             Arr::get($config, 'suffix') ?? '',
+            Arr::get($config, 'initial-starting-point') ?? 0
         );
     }
 
@@ -36,6 +37,7 @@ class IdGeneratorFactory
         int $paddingLength = 5,
         ?string $prefix = '',
         ?string $suffix = '',
+        int $initialStartingPoint = 0
     ): string {
         $prefix = $this->parseVariables($prefix);
         $suffix = $this->parseVariables($suffix);
@@ -78,6 +80,11 @@ class IdGeneratorFactory
 
         // stripped max id from maxId starting from prefix length and extracting according to adaptive length
         $strippedMaxId = Str::substr($maxId, $prefixLength, $adaptiveLength);
+
+        // If no id was found, use initial starting point (e.g. start from 01001 instead of 00001)
+        if (empty($strippedMaxId)) {
+            $strippedMaxId = $initialStartingPoint;
+        }
 
         $nextStrippedId = (int) $strippedMaxId + 1;
 
