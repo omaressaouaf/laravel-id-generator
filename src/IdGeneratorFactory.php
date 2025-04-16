@@ -52,6 +52,10 @@ class IdGeneratorFactory
                 "SUBSTR(max_id_without_prefix, 1, LENGTH(max_id_without_prefix) - {$suffixLength}) GLOB ?",
                 ['[0-9]*'],
             ],
+            'pgsql' => [
+                "SUBSTR(SUBSTR({$field}, {$prefixLength} + 1), 1, LENGTH(SUBSTR({$field}, {$prefixLength} + 1)) - {$suffixLength}) ~ ?",
+                ['^[0-9]+$'],
+            ],
             default => [
                 "SUBSTR(max_id_without_prefix, 1, LENGTH(max_id_without_prefix) - {$suffixLength}) REGEXP ?",
                 ['^[0-9]+$'],
