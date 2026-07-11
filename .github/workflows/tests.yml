@@ -9,16 +9,38 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     timeout-minutes: 5
 
     strategy:
       fail-fast: true
       matrix:
-        php: [8.4, 8.3, 8.2]
-        dependency-version: [prefer-stable]
+        include:
+          - laravel: 10
+            php: 8.2
+            testbench: ^8.0
+            advisory_blocking: 0
 
-    name: PHP:${{ matrix.php }}
+          - laravel: 11
+            php: 8.2
+            testbench: ^9.0
+            advisory_blocking: 0
+
+          - laravel: 12
+            php: 8.2
+            testbench: ^10.0
+            advisory_blocking: 1
+
+          - laravel: 13
+            php: 8.3
+            testbench: ^11.0
+            advisory_blocking: 1
+
+          - laravel: 13
+            php: 8.5
+            testbench: ^11.0
+            advisory_blocking: 1
+
+    name: Laravel:${{ matrix.laravel }} PHP:${{ matrix.php }}
 
     steps:
       - name: Checkout code
@@ -28,11 +50,16 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, mbstring, zip, mbstring, pdo, sqlite, pdo_sqlite
+          extensions: dom, mbstring, zip, pdo, sqlite, pdo_sqlite
           coverage: pcov
 
+      - name: Select Laravel version
+        run: composer require --dev "orchestra/testbench:${{ matrix.testbench }}" --no-update
+
       - name: Install dependencies
-        run:  composer install --no-interaction --prefer-dist --no-scripts
+        env:
+          COMPOSER_POLICY_ADVISORIES_BLOCK: ${{ matrix.advisory_blocking }}
+        run: composer update --no-interaction --prefer-dist --no-scripts --with-all-dependencies
 
       - name: Execute tests
         run: ./vendor/bin/phpunit
