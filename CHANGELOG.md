@@ -2,6 +2,18 @@
 
 All notable changes to `Laravel ID Generator` will be documented in this file
 
+## v1.4.0 - 2026-07-11
+
+### What's Changed
+
+* Laravel 13 & PHP 8.5 by @Jasper-WoutICT in https://github.com/omaressaouaf/laravel-id-generator/pull/4
+
+### New Contributors
+
+* @Jasper-WoutICT made their first contribution in https://github.com/omaressaouaf/laravel-id-generator/pull/4
+
+**Full Changelog**: https://github.com/omaressaouaf/laravel-id-generator/compare/v1.3.0...v1.4.0
+
 ## v1.3.0 - 2025-11-04
 
 ### What's Changed
