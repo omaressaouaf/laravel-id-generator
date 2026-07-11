@@ -39,8 +39,8 @@
         "illuminate/contracts": "^10.0||^11.0||^12.0|^13.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.0",
-        "phpunit/phpunit": "^10.5",
+        "orchestra/testbench": "^8.0 || ^9.0 || ^10.0 || ^11.0",
+        "phpunit/phpunit": "^10.5 || ^11.5 || ^12.5 || ^13.0",
         "laravel/pint": "^1.21"
     },
     "extra" : {
