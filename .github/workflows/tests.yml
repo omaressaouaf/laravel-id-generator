@@ -18,22 +18,27 @@ jobs:
           - laravel: 10
             php: 8.2
             testbench: ^8.0
+            advisory_blocking: 0
 
           - laravel: 11
             php: 8.2
             testbench: ^9.0
+            advisory_blocking: 0
 
           - laravel: 12
             php: 8.2
             testbench: ^10.0
+            advisory_blocking: 1
 
           - laravel: 13
             php: 8.3
             testbench: ^11.0
+            advisory_blocking: 1
 
           - laravel: 13
             php: 8.5
             testbench: ^11.0
+            advisory_blocking: 1
 
     name: Laravel:${{ matrix.laravel }} PHP:${{ matrix.php }}
 
@@ -52,6 +57,8 @@ jobs:
         run: composer require --dev "orchestra/testbench:${{ matrix.testbench }}" --no-update
 
       - name: Install dependencies
+        env:
+          COMPOSER_POLICY_ADVISORIES_BLOCK: ${{ matrix.advisory_blocking }}
         run: composer update --no-interaction --prefer-dist --no-scripts --with-all-dependencies
 
       - name: Execute tests
